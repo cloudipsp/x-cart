@@ -1,0 +1,24 @@
+--- include/checkout_init.php	2020-04-23 14:07:49.000000000 +0300
++++ include/checkout_init.php	2020-07-24 16:58:45.989411763 +0300
+@@ -489,6 +489,21 @@
+ 
+             $order_data = func_order_data($orderid);
+ 
++            if (strpos($order_data['order']['payment_method'], 'Fondy') !== false) {
++                func_pm_load('cc_fondy'); // load fondy functions
++
++                if (isset($_POST['order_status']) && $_POST['order_status'] == 'approved') {
++                    if ($fondy = func_get_pm_params('fondy_payment.php')) {
++                        if (fondy_payment_valid(array('merchant_id' => $fondy['param01'], 'secret_key' => $fondy['param02']), $_POST)) {
++                            func_change_order_status($orderid, 'C'); // complete
++
++                            $order_data = func_order_data($orderid);
++                            $cart = '';
++                        }
++                    }
++                }
++            }
++
+             // Security check if current customer is not order's owner
+             if (
+                 empty($order_data)

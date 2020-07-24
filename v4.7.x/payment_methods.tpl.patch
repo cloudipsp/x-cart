@@ -1,0 +1,21 @@
+--- skin/common_files/modules/One_Page_Checkout/payment_methods.tpl	2020-04-23 14:29:15.000000000 +0300
++++ skin/common_files/modules/One_Page_Checkout/payment_methods.tpl	2020-07-24 17:01:48.554496814 +0300
+@@ -42,6 +42,18 @@
+     <td class="checkout-payment-name">
+       {include file="modules/PayPal_Here/pp_paypal_here_checkout.tpl" payment=$payment mode="one_page"}
+     </td>
++  {elseif $payment.processor eq "fondy_payment.php"}
++    <td class="checkout-payment-fondy">
++      <table cellspacing="0" cellpadding="0" width="100%">
++        <tbody>
++        <tr>
++          <td align="left">
++            <label for="pm{$payment.paymentid}"><img src="{$SkinDir}/images/payments/fondy-logo.svg" height="23" alt="Fondy Payments"></label>
++          </td>
++        </tr>
++        </tbody>
++      </table>
++    </td>
+   {elseif $payment.processor eq "ps_paypal_bml.php"}
+     <td class="checkout-payment-paypal">
+ 
